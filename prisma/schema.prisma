@@ -1,14 +1,277 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AssetDocumentType {
+  MULKIYA
+  TITLE_DEED
+  OTHER
+}
+
+//////////////////////////////////////////////////////
+// CORE AUTH & FAMILY
+//////////////////////////////////////////////////////
+
+model User {
+  id           String @id @default(uuid())
+  email        String @unique
+  passwordHash String
+  name         String
+
+  familyMember FamilyMember?
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+  userSessions UserSession[]
+}
+
+model UserSession {
+  id        String    @id @default(uuid()) @db.Uuid()
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  active    Boolean   @default(true)
+  expiresAt DateTime? @db.Timestamptz()
+  ipAddress String?
+  userAgent String?
+
+  userId String @db.Uuid()
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Family {
+  id   String @id @default(uuid())
+  name String
+
+  members FamilyMember[]
+  assets  Asset[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model FamilyMember {
+  id       String @id @default(uuid())
+  familyId String
+  userId   String @unique
+
+  fullName     String
+  relationship String?
+
+  family Family @relation(fields: [familyId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  ownerships AssetOwnership[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+//////////////////////////////////////////////////////
+// ASSET CORE
+//////////////////////////////////////////////////////
+
+enum AssetCategory {
+  REAL_ESTATE
+  BANK_ACCOUNT
+  INVESTMENT
+  BUSINESS
+  VEHICLE
+  OTHER
+}
+
+model Asset {
+  id       String        @id @default(uuid())
+  familyId String
+  category AssetCategory
+
+  family Family @relation(fields: [familyId], references: [id])
+
+  ownerships AssetOwnership[]
+
+  realEstate  RealEstateAsset?
+  bankAccount BankAccountAsset?
+  investment  InvestmentAsset?
+  business    BusinessAsset?
+  vehicle     VehicleAsset?
+  otherAsset  OtherAsset?
+
+  documents AssetDocument[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+//////////////////////////////////////////////////////
+// OWNERSHIP
+//////////////////////////////////////////////////////
+
+model AssetOwnership {
+  id             String @id @default(uuid())
+  assetId        String
+  familyMemberId String
+  percentage     Float
+
+  asset        Asset        @relation(fields: [assetId], references: [id])
+  familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+//////////////////////////////////////////////////////
+// CATEGORY-SPECIFIC ASSET TABLES
+//////////////////////////////////////////////////////
+
+model RealEstateAsset {
+  id      String @id @default(uuid())
+  assetId String @unique
+
+  propertyName  String
+  propertyType  String
+  location      String
+  plotNumber    String?
+  areaSqFt      Float?
+  purchaseDate  DateTime?
+  purchasePrice Float
+  currentValue  Float
+  valuationDate DateTime?
+  rentalIncome  Float?
+
+  asset Asset @relation(fields: [assetId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model BankAccountAsset {
+  id      String @id @default(uuid())
+  assetId String @unique
+
+  accountName    String
+  bankName       String
+  accountNumber  String?
+  accountType    String
+  currentBalance Float
+  interestRate   Float?
+  openingDate    DateTime?
+
+  asset Asset @relation(fields: [assetId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model InvestmentAsset {
+  id      String @id @default(uuid())
+  assetId String @unique
+
+  investmentName    String
+  broker            String
+  accountNumber     String?
+  investmentType    String
+  initialInvestment Float
+  investmentDate    DateTime?
+  currentValue      Float
+  lastUpdated       DateTime?
+
+  asset Asset @relation(fields: [assetId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model BusinessAsset {
+  id      String @id @default(uuid())
+  assetId String @unique
+
+  businessName      String
+  licenseNumber     String?
+  industry          String
+  entityType        String?
+  initialInvestment Float
+  establishmentDate DateTime?
+  currentValuation  Float
+  annualRevenue     Float?
+
+  asset Asset @relation(fields: [assetId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model VehicleAsset {
+  id      String @id @default(uuid())
+  assetId String @unique
+
+  vehicleName        String
+  vehicleType        String
+  make               String?
+  model              String?
+  year               Int?
+  registrationNumber String?
+  purchasePrice      Float
+  purchaseDate       DateTime?
+  currentValue       Float
+  outstandingLoan    Float?
+
+  asset Asset @relation(fields: [assetId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model OtherAsset {
+  id      String @id @default(uuid())
+  assetId String @unique
+
+  assetName        String
+  assetCategory    String
+  description      String?
+  purchasePrice    Float
+  purchaseDate     DateTime?
+  currentValuation Float
+  valuationDate    DateTime?
+
+  asset Asset @relation(fields: [assetId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+//////////////////////////////////////////////////////
+// DOCUMENTS
+//////////////////////////////////////////////////////
+
+model AssetDocument {
+  id      String @id @default(uuid())
+  assetId String
+
+  fileName String
+  fileUrl  String
+  fileType String
+
+  asset Asset @relation(fields: [assetId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
