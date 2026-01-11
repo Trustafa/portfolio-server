@@ -63,7 +63,7 @@ export async function loginService(req: Request, res: Response) {
 
 const createUserSchema = z.object({
   name: z.string().min(1),
-  email: z.string().email(),
+  email: z.string(),
   password: z.string(),
 });
 
@@ -80,6 +80,8 @@ export async function registerUser(input: {
       name: parsed.name,
       email: parsed.email.toLowerCase(),
       passwordHash: await hashPassword(parsed.password),
+      familyId: "1234",
+
     },
   });
 

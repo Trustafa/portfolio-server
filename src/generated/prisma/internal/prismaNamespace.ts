@@ -393,7 +393,6 @@ export const ModelName = {
   User: 'User',
   UserSession: 'UserSession',
   Family: 'Family',
-  FamilyMember: 'FamilyMember',
   Asset: 'Asset',
   AssetOwnership: 'AssetOwnership',
   RealEstateAsset: 'RealEstateAsset',
@@ -418,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userSession" | "family" | "familyMember" | "asset" | "assetOwnership" | "realEstateAsset" | "bankAccountAsset" | "investmentAsset" | "businessAsset" | "vehicleAsset" | "otherAsset" | "assetDocument"
+    modelProps: "user" | "userSession" | "family" | "asset" | "assetOwnership" | "realEstateAsset" | "bankAccountAsset" | "investmentAsset" | "businessAsset" | "vehicleAsset" | "otherAsset" | "assetDocument"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -641,80 +640,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.FamilyCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.FamilyCountAggregateOutputType> | number
-        }
-      }
-    }
-    FamilyMember: {
-      payload: Prisma.$FamilyMemberPayload<ExtArgs>
-      fields: Prisma.FamilyMemberFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.FamilyMemberFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.FamilyMemberFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload>
-        }
-        findFirst: {
-          args: Prisma.FamilyMemberFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.FamilyMemberFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload>
-        }
-        findMany: {
-          args: Prisma.FamilyMemberFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload>[]
-        }
-        create: {
-          args: Prisma.FamilyMemberCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload>
-        }
-        createMany: {
-          args: Prisma.FamilyMemberCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.FamilyMemberCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload>[]
-        }
-        delete: {
-          args: Prisma.FamilyMemberDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload>
-        }
-        update: {
-          args: Prisma.FamilyMemberUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload>
-        }
-        deleteMany: {
-          args: Prisma.FamilyMemberDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.FamilyMemberUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.FamilyMemberUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload>[]
-        }
-        upsert: {
-          args: Prisma.FamilyMemberUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyMemberPayload>
-        }
-        aggregate: {
-          args: Prisma.FamilyMemberAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateFamilyMember>
-        }
-        groupBy: {
-          args: Prisma.FamilyMemberGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.FamilyMemberGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.FamilyMemberCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.FamilyMemberCountAggregateOutputType> | number
         }
       }
     }
@@ -1428,6 +1353,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   name: 'name',
+  familyId: 'familyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -1462,20 +1388,6 @@ export const FamilyScalarFieldEnum = {
 export type FamilyScalarFieldEnum = (typeof FamilyScalarFieldEnum)[keyof typeof FamilyScalarFieldEnum]
 
 
-export const FamilyMemberScalarFieldEnum = {
-  id: 'id',
-  familyId: 'familyId',
-  userId: 'userId',
-  fullName: 'fullName',
-  relationship: 'relationship',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
-} as const
-
-export type FamilyMemberScalarFieldEnum = (typeof FamilyMemberScalarFieldEnum)[keyof typeof FamilyMemberScalarFieldEnum]
-
-
 export const AssetScalarFieldEnum = {
   id: 'id',
   familyId: 'familyId',
@@ -1491,11 +1403,11 @@ export type AssetScalarFieldEnum = (typeof AssetScalarFieldEnum)[keyof typeof As
 export const AssetOwnershipScalarFieldEnum = {
   id: 'id',
   assetId: 'assetId',
-  familyMemberId: 'familyMemberId',
   percentage: 'percentage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  userId: 'userId'
 } as const
 
 export type AssetOwnershipScalarFieldEnum = (typeof AssetOwnershipScalarFieldEnum)[keyof typeof AssetOwnershipScalarFieldEnum]
@@ -1827,7 +1739,6 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   userSession?: Prisma.UserSessionOmit
   family?: Prisma.FamilyOmit
-  familyMember?: Prisma.FamilyMemberOmit
   asset?: Prisma.AssetOmit
   assetOwnership?: Prisma.AssetOwnershipOmit
   realEstateAsset?: Prisma.RealEstateAssetOmit

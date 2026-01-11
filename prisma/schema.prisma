@@ -19,12 +19,15 @@ enum AssetDocumentType {
 //////////////////////////////////////////////////////
 
 model User {
-  id           String @id @default(uuid())
+  id           String @id @default(uuid()) @db.Uuid()
   email        String @unique
   passwordHash String
   name         String
 
-  familyMember FamilyMember?
+  familyId String
+  family   Family @relation(fields: [familyId], references: [id])
+
+  ownerships AssetOwnership[]
 
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -51,30 +54,12 @@ model Family {
   id   String @id @default(uuid())
   name String
 
-  members FamilyMember[]
-  assets  Asset[]
+  assets Asset[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
-}
-
-model FamilyMember {
-  id       String @id @default(uuid())
-  familyId String
-  userId   String @unique
-
-  fullName     String
-  relationship String?
-
-  family Family @relation(fields: [familyId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
-
-  ownerships AssetOwnership[]
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  members   User[]
 }
 
 //////////////////////////////////////////////////////
@@ -118,17 +103,17 @@ model Asset {
 //////////////////////////////////////////////////////
 
 model AssetOwnership {
-  id             String @id @default(uuid())
-  assetId        String
-  familyMemberId String
-  percentage     Float
+  id         String @id @default(uuid())
+  assetId    String
+  percentage Float
 
-  asset        Asset        @relation(fields: [assetId], references: [id])
-  familyMember FamilyMember @relation(fields: [familyMemberId], references: [id])
+  asset Asset @relation(fields: [assetId], references: [id])
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?   @db.Uuid()
 }
 
 //////////////////////////////////////////////////////

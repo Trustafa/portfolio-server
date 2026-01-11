@@ -37,31 +37,31 @@ export type AssetOwnershipSumAggregateOutputType = {
 export type AssetOwnershipMinAggregateOutputType = {
   id: string | null
   assetId: string | null
-  familyMemberId: string | null
   percentage: number | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  userId: string | null
 }
 
 export type AssetOwnershipMaxAggregateOutputType = {
   id: string | null
   assetId: string | null
-  familyMemberId: string | null
   percentage: number | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  userId: string | null
 }
 
 export type AssetOwnershipCountAggregateOutputType = {
   id: number
   assetId: number
-  familyMemberId: number
   percentage: number
   createdAt: number
   updatedAt: number
   deletedAt: number
+  userId: number
   _all: number
 }
 
@@ -77,31 +77,31 @@ export type AssetOwnershipSumAggregateInputType = {
 export type AssetOwnershipMinAggregateInputType = {
   id?: true
   assetId?: true
-  familyMemberId?: true
   percentage?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  userId?: true
 }
 
 export type AssetOwnershipMaxAggregateInputType = {
   id?: true
   assetId?: true
-  familyMemberId?: true
   percentage?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  userId?: true
 }
 
 export type AssetOwnershipCountAggregateInputType = {
   id?: true
   assetId?: true
-  familyMemberId?: true
   percentage?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  userId?: true
   _all?: true
 }
 
@@ -194,11 +194,11 @@ export type AssetOwnershipGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type AssetOwnershipGroupByOutputType = {
   id: string
   assetId: string
-  familyMemberId: string
   percentage: number
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
+  userId: string | null
   _count: AssetOwnershipCountAggregateOutputType | null
   _avg: AssetOwnershipAvgAggregateOutputType | null
   _sum: AssetOwnershipSumAggregateOutputType | null
@@ -227,25 +227,25 @@ export type AssetOwnershipWhereInput = {
   NOT?: Prisma.AssetOwnershipWhereInput | Prisma.AssetOwnershipWhereInput[]
   id?: Prisma.StringFilter<"AssetOwnership"> | string
   assetId?: Prisma.StringFilter<"AssetOwnership"> | string
-  familyMemberId?: Prisma.StringFilter<"AssetOwnership"> | string
   percentage?: Prisma.FloatFilter<"AssetOwnership"> | number
   createdAt?: Prisma.DateTimeFilter<"AssetOwnership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssetOwnership"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AssetOwnership"> | Date | string | null
+  userId?: Prisma.UuidNullableFilter<"AssetOwnership"> | string | null
   asset?: Prisma.XOR<Prisma.AssetScalarRelationFilter, Prisma.AssetWhereInput>
-  familyMember?: Prisma.XOR<Prisma.FamilyMemberScalarRelationFilter, Prisma.FamilyMemberWhereInput>
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type AssetOwnershipOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  familyMemberId?: Prisma.SortOrder
   percentage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   asset?: Prisma.AssetOrderByWithRelationInput
-  familyMember?: Prisma.FamilyMemberOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type AssetOwnershipWhereUniqueInput = Prisma.AtLeast<{
@@ -254,23 +254,23 @@ export type AssetOwnershipWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AssetOwnershipWhereInput[]
   NOT?: Prisma.AssetOwnershipWhereInput | Prisma.AssetOwnershipWhereInput[]
   assetId?: Prisma.StringFilter<"AssetOwnership"> | string
-  familyMemberId?: Prisma.StringFilter<"AssetOwnership"> | string
   percentage?: Prisma.FloatFilter<"AssetOwnership"> | number
   createdAt?: Prisma.DateTimeFilter<"AssetOwnership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssetOwnership"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AssetOwnership"> | Date | string | null
+  userId?: Prisma.UuidNullableFilter<"AssetOwnership"> | string | null
   asset?: Prisma.XOR<Prisma.AssetScalarRelationFilter, Prisma.AssetWhereInput>
-  familyMember?: Prisma.XOR<Prisma.FamilyMemberScalarRelationFilter, Prisma.FamilyMemberWhereInput>
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type AssetOwnershipOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  familyMemberId?: Prisma.SortOrder
   percentage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AssetOwnershipCountOrderByAggregateInput
   _avg?: Prisma.AssetOwnershipAvgOrderByAggregateInput
   _max?: Prisma.AssetOwnershipMaxOrderByAggregateInput
@@ -284,11 +284,11 @@ export type AssetOwnershipScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AssetOwnershipScalarWhereWithAggregatesInput | Prisma.AssetOwnershipScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"AssetOwnership"> | string
   assetId?: Prisma.StringWithAggregatesFilter<"AssetOwnership"> | string
-  familyMemberId?: Prisma.StringWithAggregatesFilter<"AssetOwnership"> | string
   percentage?: Prisma.FloatWithAggregatesFilter<"AssetOwnership"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AssetOwnership"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AssetOwnership"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AssetOwnership"> | Date | string | null
+  userId?: Prisma.UuidNullableWithAggregatesFilter<"AssetOwnership"> | string | null
 }
 
 export type AssetOwnershipCreateInput = {
@@ -298,17 +298,17 @@ export type AssetOwnershipCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   asset: Prisma.AssetCreateNestedOneWithoutOwnershipsInput
-  familyMember: Prisma.FamilyMemberCreateNestedOneWithoutOwnershipsInput
+  user?: Prisma.UserCreateNestedOneWithoutOwnershipsInput
 }
 
 export type AssetOwnershipUncheckedCreateInput = {
   id?: string
   assetId: string
-  familyMemberId: string
   percentage: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  userId?: string | null
 }
 
 export type AssetOwnershipUpdateInput = {
@@ -318,27 +318,27 @@ export type AssetOwnershipUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   asset?: Prisma.AssetUpdateOneRequiredWithoutOwnershipsNestedInput
-  familyMember?: Prisma.FamilyMemberUpdateOneRequiredWithoutOwnershipsNestedInput
+  user?: Prisma.UserUpdateOneWithoutOwnershipsNestedInput
 }
 
 export type AssetOwnershipUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.StringFieldUpdateOperationsInput | string
-  familyMemberId?: Prisma.StringFieldUpdateOperationsInput | string
   percentage?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AssetOwnershipCreateManyInput = {
   id?: string
   assetId: string
-  familyMemberId: string
   percentage: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  userId?: string | null
 }
 
 export type AssetOwnershipUpdateManyMutationInput = {
@@ -352,11 +352,11 @@ export type AssetOwnershipUpdateManyMutationInput = {
 export type AssetOwnershipUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.StringFieldUpdateOperationsInput | string
-  familyMemberId?: Prisma.StringFieldUpdateOperationsInput | string
   percentage?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AssetOwnershipListRelationFilter = {
@@ -372,11 +372,11 @@ export type AssetOwnershipOrderByRelationAggregateInput = {
 export type AssetOwnershipCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  familyMemberId?: Prisma.SortOrder
   percentage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type AssetOwnershipAvgOrderByAggregateInput = {
@@ -386,66 +386,66 @@ export type AssetOwnershipAvgOrderByAggregateInput = {
 export type AssetOwnershipMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  familyMemberId?: Prisma.SortOrder
   percentage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type AssetOwnershipMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
-  familyMemberId?: Prisma.SortOrder
   percentage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type AssetOwnershipSumOrderByAggregateInput = {
   percentage?: Prisma.SortOrder
 }
 
-export type AssetOwnershipCreateNestedManyWithoutFamilyMemberInput = {
-  create?: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutFamilyMemberInput, Prisma.AssetOwnershipUncheckedCreateWithoutFamilyMemberInput> | Prisma.AssetOwnershipCreateWithoutFamilyMemberInput[] | Prisma.AssetOwnershipUncheckedCreateWithoutFamilyMemberInput[]
-  connectOrCreate?: Prisma.AssetOwnershipCreateOrConnectWithoutFamilyMemberInput | Prisma.AssetOwnershipCreateOrConnectWithoutFamilyMemberInput[]
-  createMany?: Prisma.AssetOwnershipCreateManyFamilyMemberInputEnvelope
+export type AssetOwnershipCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutUserInput, Prisma.AssetOwnershipUncheckedCreateWithoutUserInput> | Prisma.AssetOwnershipCreateWithoutUserInput[] | Prisma.AssetOwnershipUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.AssetOwnershipCreateOrConnectWithoutUserInput | Prisma.AssetOwnershipCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.AssetOwnershipCreateManyUserInputEnvelope
   connect?: Prisma.AssetOwnershipWhereUniqueInput | Prisma.AssetOwnershipWhereUniqueInput[]
 }
 
-export type AssetOwnershipUncheckedCreateNestedManyWithoutFamilyMemberInput = {
-  create?: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutFamilyMemberInput, Prisma.AssetOwnershipUncheckedCreateWithoutFamilyMemberInput> | Prisma.AssetOwnershipCreateWithoutFamilyMemberInput[] | Prisma.AssetOwnershipUncheckedCreateWithoutFamilyMemberInput[]
-  connectOrCreate?: Prisma.AssetOwnershipCreateOrConnectWithoutFamilyMemberInput | Prisma.AssetOwnershipCreateOrConnectWithoutFamilyMemberInput[]
-  createMany?: Prisma.AssetOwnershipCreateManyFamilyMemberInputEnvelope
+export type AssetOwnershipUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutUserInput, Prisma.AssetOwnershipUncheckedCreateWithoutUserInput> | Prisma.AssetOwnershipCreateWithoutUserInput[] | Prisma.AssetOwnershipUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.AssetOwnershipCreateOrConnectWithoutUserInput | Prisma.AssetOwnershipCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.AssetOwnershipCreateManyUserInputEnvelope
   connect?: Prisma.AssetOwnershipWhereUniqueInput | Prisma.AssetOwnershipWhereUniqueInput[]
 }
 
-export type AssetOwnershipUpdateManyWithoutFamilyMemberNestedInput = {
-  create?: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutFamilyMemberInput, Prisma.AssetOwnershipUncheckedCreateWithoutFamilyMemberInput> | Prisma.AssetOwnershipCreateWithoutFamilyMemberInput[] | Prisma.AssetOwnershipUncheckedCreateWithoutFamilyMemberInput[]
-  connectOrCreate?: Prisma.AssetOwnershipCreateOrConnectWithoutFamilyMemberInput | Prisma.AssetOwnershipCreateOrConnectWithoutFamilyMemberInput[]
-  upsert?: Prisma.AssetOwnershipUpsertWithWhereUniqueWithoutFamilyMemberInput | Prisma.AssetOwnershipUpsertWithWhereUniqueWithoutFamilyMemberInput[]
-  createMany?: Prisma.AssetOwnershipCreateManyFamilyMemberInputEnvelope
+export type AssetOwnershipUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutUserInput, Prisma.AssetOwnershipUncheckedCreateWithoutUserInput> | Prisma.AssetOwnershipCreateWithoutUserInput[] | Prisma.AssetOwnershipUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.AssetOwnershipCreateOrConnectWithoutUserInput | Prisma.AssetOwnershipCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.AssetOwnershipUpsertWithWhereUniqueWithoutUserInput | Prisma.AssetOwnershipUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.AssetOwnershipCreateManyUserInputEnvelope
   set?: Prisma.AssetOwnershipWhereUniqueInput | Prisma.AssetOwnershipWhereUniqueInput[]
   disconnect?: Prisma.AssetOwnershipWhereUniqueInput | Prisma.AssetOwnershipWhereUniqueInput[]
   delete?: Prisma.AssetOwnershipWhereUniqueInput | Prisma.AssetOwnershipWhereUniqueInput[]
   connect?: Prisma.AssetOwnershipWhereUniqueInput | Prisma.AssetOwnershipWhereUniqueInput[]
-  update?: Prisma.AssetOwnershipUpdateWithWhereUniqueWithoutFamilyMemberInput | Prisma.AssetOwnershipUpdateWithWhereUniqueWithoutFamilyMemberInput[]
-  updateMany?: Prisma.AssetOwnershipUpdateManyWithWhereWithoutFamilyMemberInput | Prisma.AssetOwnershipUpdateManyWithWhereWithoutFamilyMemberInput[]
+  update?: Prisma.AssetOwnershipUpdateWithWhereUniqueWithoutUserInput | Prisma.AssetOwnershipUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.AssetOwnershipUpdateManyWithWhereWithoutUserInput | Prisma.AssetOwnershipUpdateManyWithWhereWithoutUserInput[]
   deleteMany?: Prisma.AssetOwnershipScalarWhereInput | Prisma.AssetOwnershipScalarWhereInput[]
 }
 
-export type AssetOwnershipUncheckedUpdateManyWithoutFamilyMemberNestedInput = {
-  create?: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutFamilyMemberInput, Prisma.AssetOwnershipUncheckedCreateWithoutFamilyMemberInput> | Prisma.AssetOwnershipCreateWithoutFamilyMemberInput[] | Prisma.AssetOwnershipUncheckedCreateWithoutFamilyMemberInput[]
-  connectOrCreate?: Prisma.AssetOwnershipCreateOrConnectWithoutFamilyMemberInput | Prisma.AssetOwnershipCreateOrConnectWithoutFamilyMemberInput[]
-  upsert?: Prisma.AssetOwnershipUpsertWithWhereUniqueWithoutFamilyMemberInput | Prisma.AssetOwnershipUpsertWithWhereUniqueWithoutFamilyMemberInput[]
-  createMany?: Prisma.AssetOwnershipCreateManyFamilyMemberInputEnvelope
+export type AssetOwnershipUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutUserInput, Prisma.AssetOwnershipUncheckedCreateWithoutUserInput> | Prisma.AssetOwnershipCreateWithoutUserInput[] | Prisma.AssetOwnershipUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.AssetOwnershipCreateOrConnectWithoutUserInput | Prisma.AssetOwnershipCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.AssetOwnershipUpsertWithWhereUniqueWithoutUserInput | Prisma.AssetOwnershipUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.AssetOwnershipCreateManyUserInputEnvelope
   set?: Prisma.AssetOwnershipWhereUniqueInput | Prisma.AssetOwnershipWhereUniqueInput[]
   disconnect?: Prisma.AssetOwnershipWhereUniqueInput | Prisma.AssetOwnershipWhereUniqueInput[]
   delete?: Prisma.AssetOwnershipWhereUniqueInput | Prisma.AssetOwnershipWhereUniqueInput[]
   connect?: Prisma.AssetOwnershipWhereUniqueInput | Prisma.AssetOwnershipWhereUniqueInput[]
-  update?: Prisma.AssetOwnershipUpdateWithWhereUniqueWithoutFamilyMemberInput | Prisma.AssetOwnershipUpdateWithWhereUniqueWithoutFamilyMemberInput[]
-  updateMany?: Prisma.AssetOwnershipUpdateManyWithWhereWithoutFamilyMemberInput | Prisma.AssetOwnershipUpdateManyWithWhereWithoutFamilyMemberInput[]
+  update?: Prisma.AssetOwnershipUpdateWithWhereUniqueWithoutUserInput | Prisma.AssetOwnershipUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.AssetOwnershipUpdateManyWithWhereWithoutUserInput | Prisma.AssetOwnershipUpdateManyWithWhereWithoutUserInput[]
   deleteMany?: Prisma.AssetOwnershipScalarWhereInput | Prisma.AssetOwnershipScalarWhereInput[]
 }
 
@@ -499,7 +499,7 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type AssetOwnershipCreateWithoutFamilyMemberInput = {
+export type AssetOwnershipCreateWithoutUserInput = {
   id?: string
   percentage: number
   createdAt?: Date | string
@@ -508,7 +508,7 @@ export type AssetOwnershipCreateWithoutFamilyMemberInput = {
   asset: Prisma.AssetCreateNestedOneWithoutOwnershipsInput
 }
 
-export type AssetOwnershipUncheckedCreateWithoutFamilyMemberInput = {
+export type AssetOwnershipUncheckedCreateWithoutUserInput = {
   id?: string
   assetId: string
   percentage: number
@@ -517,30 +517,30 @@ export type AssetOwnershipUncheckedCreateWithoutFamilyMemberInput = {
   deletedAt?: Date | string | null
 }
 
-export type AssetOwnershipCreateOrConnectWithoutFamilyMemberInput = {
+export type AssetOwnershipCreateOrConnectWithoutUserInput = {
   where: Prisma.AssetOwnershipWhereUniqueInput
-  create: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutFamilyMemberInput, Prisma.AssetOwnershipUncheckedCreateWithoutFamilyMemberInput>
+  create: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutUserInput, Prisma.AssetOwnershipUncheckedCreateWithoutUserInput>
 }
 
-export type AssetOwnershipCreateManyFamilyMemberInputEnvelope = {
-  data: Prisma.AssetOwnershipCreateManyFamilyMemberInput | Prisma.AssetOwnershipCreateManyFamilyMemberInput[]
+export type AssetOwnershipCreateManyUserInputEnvelope = {
+  data: Prisma.AssetOwnershipCreateManyUserInput | Prisma.AssetOwnershipCreateManyUserInput[]
   skipDuplicates?: boolean
 }
 
-export type AssetOwnershipUpsertWithWhereUniqueWithoutFamilyMemberInput = {
+export type AssetOwnershipUpsertWithWhereUniqueWithoutUserInput = {
   where: Prisma.AssetOwnershipWhereUniqueInput
-  update: Prisma.XOR<Prisma.AssetOwnershipUpdateWithoutFamilyMemberInput, Prisma.AssetOwnershipUncheckedUpdateWithoutFamilyMemberInput>
-  create: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutFamilyMemberInput, Prisma.AssetOwnershipUncheckedCreateWithoutFamilyMemberInput>
+  update: Prisma.XOR<Prisma.AssetOwnershipUpdateWithoutUserInput, Prisma.AssetOwnershipUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.AssetOwnershipCreateWithoutUserInput, Prisma.AssetOwnershipUncheckedCreateWithoutUserInput>
 }
 
-export type AssetOwnershipUpdateWithWhereUniqueWithoutFamilyMemberInput = {
+export type AssetOwnershipUpdateWithWhereUniqueWithoutUserInput = {
   where: Prisma.AssetOwnershipWhereUniqueInput
-  data: Prisma.XOR<Prisma.AssetOwnershipUpdateWithoutFamilyMemberInput, Prisma.AssetOwnershipUncheckedUpdateWithoutFamilyMemberInput>
+  data: Prisma.XOR<Prisma.AssetOwnershipUpdateWithoutUserInput, Prisma.AssetOwnershipUncheckedUpdateWithoutUserInput>
 }
 
-export type AssetOwnershipUpdateManyWithWhereWithoutFamilyMemberInput = {
+export type AssetOwnershipUpdateManyWithWhereWithoutUserInput = {
   where: Prisma.AssetOwnershipScalarWhereInput
-  data: Prisma.XOR<Prisma.AssetOwnershipUpdateManyMutationInput, Prisma.AssetOwnershipUncheckedUpdateManyWithoutFamilyMemberInput>
+  data: Prisma.XOR<Prisma.AssetOwnershipUpdateManyMutationInput, Prisma.AssetOwnershipUncheckedUpdateManyWithoutUserInput>
 }
 
 export type AssetOwnershipScalarWhereInput = {
@@ -549,11 +549,11 @@ export type AssetOwnershipScalarWhereInput = {
   NOT?: Prisma.AssetOwnershipScalarWhereInput | Prisma.AssetOwnershipScalarWhereInput[]
   id?: Prisma.StringFilter<"AssetOwnership"> | string
   assetId?: Prisma.StringFilter<"AssetOwnership"> | string
-  familyMemberId?: Prisma.StringFilter<"AssetOwnership"> | string
   percentage?: Prisma.FloatFilter<"AssetOwnership"> | number
   createdAt?: Prisma.DateTimeFilter<"AssetOwnership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssetOwnership"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AssetOwnership"> | Date | string | null
+  userId?: Prisma.UuidNullableFilter<"AssetOwnership"> | string | null
 }
 
 export type AssetOwnershipCreateWithoutAssetInput = {
@@ -562,16 +562,16 @@ export type AssetOwnershipCreateWithoutAssetInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  familyMember: Prisma.FamilyMemberCreateNestedOneWithoutOwnershipsInput
+  user?: Prisma.UserCreateNestedOneWithoutOwnershipsInput
 }
 
 export type AssetOwnershipUncheckedCreateWithoutAssetInput = {
   id?: string
-  familyMemberId: string
   percentage: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  userId?: string | null
 }
 
 export type AssetOwnershipCreateOrConnectWithoutAssetInput = {
@@ -600,7 +600,7 @@ export type AssetOwnershipUpdateManyWithWhereWithoutAssetInput = {
   data: Prisma.XOR<Prisma.AssetOwnershipUpdateManyMutationInput, Prisma.AssetOwnershipUncheckedUpdateManyWithoutAssetInput>
 }
 
-export type AssetOwnershipCreateManyFamilyMemberInput = {
+export type AssetOwnershipCreateManyUserInput = {
   id?: string
   assetId: string
   percentage: number
@@ -609,7 +609,7 @@ export type AssetOwnershipCreateManyFamilyMemberInput = {
   deletedAt?: Date | string | null
 }
 
-export type AssetOwnershipUpdateWithoutFamilyMemberInput = {
+export type AssetOwnershipUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   percentage?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -618,7 +618,7 @@ export type AssetOwnershipUpdateWithoutFamilyMemberInput = {
   asset?: Prisma.AssetUpdateOneRequiredWithoutOwnershipsNestedInput
 }
 
-export type AssetOwnershipUncheckedUpdateWithoutFamilyMemberInput = {
+export type AssetOwnershipUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.StringFieldUpdateOperationsInput | string
   percentage?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -627,7 +627,7 @@ export type AssetOwnershipUncheckedUpdateWithoutFamilyMemberInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
-export type AssetOwnershipUncheckedUpdateManyWithoutFamilyMemberInput = {
+export type AssetOwnershipUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.StringFieldUpdateOperationsInput | string
   percentage?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -638,11 +638,11 @@ export type AssetOwnershipUncheckedUpdateManyWithoutFamilyMemberInput = {
 
 export type AssetOwnershipCreateManyAssetInput = {
   id?: string
-  familyMemberId: string
   percentage: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  userId?: string | null
 }
 
 export type AssetOwnershipUpdateWithoutAssetInput = {
@@ -651,25 +651,25 @@ export type AssetOwnershipUpdateWithoutAssetInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  familyMember?: Prisma.FamilyMemberUpdateOneRequiredWithoutOwnershipsNestedInput
+  user?: Prisma.UserUpdateOneWithoutOwnershipsNestedInput
 }
 
 export type AssetOwnershipUncheckedUpdateWithoutAssetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  familyMemberId?: Prisma.StringFieldUpdateOperationsInput | string
   percentage?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AssetOwnershipUncheckedUpdateManyWithoutAssetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  familyMemberId?: Prisma.StringFieldUpdateOperationsInput | string
   percentage?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -677,77 +677,77 @@ export type AssetOwnershipUncheckedUpdateManyWithoutAssetInput = {
 export type AssetOwnershipSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   assetId?: boolean
-  familyMemberId?: boolean
   percentage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  userId?: boolean
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
-  familyMember?: boolean | Prisma.FamilyMemberDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.AssetOwnership$userArgs<ExtArgs>
 }, ExtArgs["result"]["assetOwnership"]>
 
 export type AssetOwnershipSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   assetId?: boolean
-  familyMemberId?: boolean
   percentage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  userId?: boolean
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
-  familyMember?: boolean | Prisma.FamilyMemberDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.AssetOwnership$userArgs<ExtArgs>
 }, ExtArgs["result"]["assetOwnership"]>
 
 export type AssetOwnershipSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   assetId?: boolean
-  familyMemberId?: boolean
   percentage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  userId?: boolean
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
-  familyMember?: boolean | Prisma.FamilyMemberDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.AssetOwnership$userArgs<ExtArgs>
 }, ExtArgs["result"]["assetOwnership"]>
 
 export type AssetOwnershipSelectScalar = {
   id?: boolean
   assetId?: boolean
-  familyMemberId?: boolean
   percentage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  userId?: boolean
 }
 
-export type AssetOwnershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assetId" | "familyMemberId" | "percentage" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["assetOwnership"]>
+export type AssetOwnershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assetId" | "percentage" | "createdAt" | "updatedAt" | "deletedAt" | "userId", ExtArgs["result"]["assetOwnership"]>
 export type AssetOwnershipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
-  familyMember?: boolean | Prisma.FamilyMemberDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.AssetOwnership$userArgs<ExtArgs>
 }
 export type AssetOwnershipIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
-  familyMember?: boolean | Prisma.FamilyMemberDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.AssetOwnership$userArgs<ExtArgs>
 }
 export type AssetOwnershipIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
-  familyMember?: boolean | Prisma.FamilyMemberDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.AssetOwnership$userArgs<ExtArgs>
 }
 
 export type $AssetOwnershipPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AssetOwnership"
   objects: {
     asset: Prisma.$AssetPayload<ExtArgs>
-    familyMember: Prisma.$FamilyMemberPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     assetId: string
-    familyMemberId: string
     percentage: number
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
+    userId: string | null
   }, ExtArgs["result"]["assetOwnership"]>
   composites: {}
 }
@@ -1143,7 +1143,7 @@ readonly fields: AssetOwnershipFieldRefs;
 export interface Prisma__AssetOwnershipClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   asset<T extends Prisma.AssetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssetDefaultArgs<ExtArgs>>): Prisma.Prisma__AssetClient<runtime.Types.Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  familyMember<T extends Prisma.FamilyMemberDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FamilyMemberDefaultArgs<ExtArgs>>): Prisma.Prisma__FamilyMemberClient<runtime.Types.Result.GetResult<Prisma.$FamilyMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.AssetOwnership$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssetOwnership$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1175,11 +1175,11 @@ export interface Prisma__AssetOwnershipClient<T, Null = never, ExtArgs extends r
 export interface AssetOwnershipFieldRefs {
   readonly id: Prisma.FieldRef<"AssetOwnership", 'String'>
   readonly assetId: Prisma.FieldRef<"AssetOwnership", 'String'>
-  readonly familyMemberId: Prisma.FieldRef<"AssetOwnership", 'String'>
   readonly percentage: Prisma.FieldRef<"AssetOwnership", 'Float'>
   readonly createdAt: Prisma.FieldRef<"AssetOwnership", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AssetOwnership", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"AssetOwnership", 'DateTime'>
+  readonly userId: Prisma.FieldRef<"AssetOwnership", 'String'>
 }
     
 
@@ -1573,6 +1573,25 @@ export type AssetOwnershipDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many AssetOwnerships to delete.
    */
   limit?: number
+}
+
+/**
+ * AssetOwnership.user
+ */
+export type AssetOwnership$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

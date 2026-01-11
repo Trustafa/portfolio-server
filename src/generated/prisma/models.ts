@@ -11,7 +11,6 @@
 export type * from './models/User.js'
 export type * from './models/UserSession.js'
 export type * from './models/Family.js'
-export type * from './models/FamilyMember.js'
 export type * from './models/Asset.js'
 export type * from './models/AssetOwnership.js'
 export type * from './models/RealEstateAsset.js'

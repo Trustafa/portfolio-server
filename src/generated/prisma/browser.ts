@@ -33,11 +33,6 @@ export type UserSession = Prisma.UserSessionModel
  */
 export type Family = Prisma.FamilyModel
 /**
- * Model FamilyMember
- * 
- */
-export type FamilyMember = Prisma.FamilyMemberModel
-/**
  * Model Asset
  * 
  */

@@ -52,7 +52,6 @@ export const ModelName = {
   User: 'User',
   UserSession: 'UserSession',
   Family: 'Family',
-  FamilyMember: 'FamilyMember',
   Asset: 'Asset',
   AssetOwnership: 'AssetOwnership',
   RealEstateAsset: 'RealEstateAsset',
@@ -85,6 +84,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   name: 'name',
+  familyId: 'familyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -119,20 +119,6 @@ export const FamilyScalarFieldEnum = {
 export type FamilyScalarFieldEnum = (typeof FamilyScalarFieldEnum)[keyof typeof FamilyScalarFieldEnum]
 
 
-export const FamilyMemberScalarFieldEnum = {
-  id: 'id',
-  familyId: 'familyId',
-  userId: 'userId',
-  fullName: 'fullName',
-  relationship: 'relationship',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
-} as const
-
-export type FamilyMemberScalarFieldEnum = (typeof FamilyMemberScalarFieldEnum)[keyof typeof FamilyMemberScalarFieldEnum]
-
-
 export const AssetScalarFieldEnum = {
   id: 'id',
   familyId: 'familyId',
@@ -148,11 +134,11 @@ export type AssetScalarFieldEnum = (typeof AssetScalarFieldEnum)[keyof typeof As
 export const AssetOwnershipScalarFieldEnum = {
   id: 'id',
   assetId: 'assetId',
-  familyMemberId: 'familyMemberId',
   percentage: 'percentage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  userId: 'userId'
 } as const
 
 export type AssetOwnershipScalarFieldEnum = (typeof AssetOwnershipScalarFieldEnum)[keyof typeof AssetOwnershipScalarFieldEnum]
