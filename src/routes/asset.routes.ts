@@ -1,9 +1,8 @@
 
 
-// src/routes/asset.routes.ts
 import { Router, Request, Response } from "express";
 import { prisma } from "../config/prisma";
-import { createVehicleAsset } from "../controllers/vehicleAsset.controller";
+import { createBankAccountAsset, createBusinessAsset, createInvestmentAsset, createOtherAsset, createRealEstateAsset, createVehicleAsset } from "../controllers/asset.controller";
 
 import {
   toVehicleResponse,
@@ -13,10 +12,121 @@ import {
   toBusinessAssetResponse,
   toOtherAssetResponse,
 } from "../services/asset.service";
+import { findLoggedInUser } from "../services/auth.service";
 
 const router = Router();
 
-// GET /api/asset/:id
+router.get("/", async (req: Request, res: Response) => {
+  const user = await findLoggedInUser(req);
+  if (!user) {
+    return res.status(401).json({error: 'Unauthorized'});
+  }
+
+  try {
+    const assets = await prisma.asset.findMany({
+      where: { familyId: user.familyId, deletedAt: null },
+      include: {
+        ownerships: { include: { user: true } },
+        realEstate: true,
+        vehicle: true,
+        bankAccount: true,
+        investment: true,
+        business: true,
+        otherAsset: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    const responses = [];
+
+    for (const asset of assets) {
+      let response;
+
+      switch (asset.category) {
+        case "VEHICLE":
+          if (!asset.vehicle) continue;
+          response = toVehicleResponse({
+            id: asset.id,
+            category: asset.category,
+            createdAt: asset.createdAt,
+            updatedAt: asset.updatedAt,
+            vehicle: asset.vehicle,
+            ownerships: asset.ownerships,
+          });
+          break;
+
+        case "REAL_ESTATE":
+          if (!asset.realEstate) continue;
+          response = toRealEstateAssetResponse({
+            id: asset.id,
+            category: asset.category,
+            createdAt: asset.createdAt,
+            updatedAt: asset.updatedAt,
+            realEstate: asset.realEstate,
+            ownerships: asset.ownerships,
+          });
+          break;
+
+        case "BANK_ACCOUNT":
+          if (!asset.bankAccount) continue;
+          response = toBankAccountAssetResponse({
+            id: asset.id,
+            category: asset.category,
+            createdAt: asset.createdAt,
+            updatedAt: asset.updatedAt,
+            bankAccount: asset.bankAccount,
+            ownerships: asset.ownerships,
+          });
+          break;
+
+        case "INVESTMENT":
+          if (!asset.investment) continue;
+          response = toInvestmentAssetResponse({
+            id: asset.id,
+            category: asset.category,
+            createdAt: asset.createdAt,
+            updatedAt: asset.updatedAt,
+            investment: asset.investment,
+            ownerships: asset.ownerships,
+          });
+          break;
+
+        case "BUSINESS":
+          if (!asset.business) continue;
+          response = toBusinessAssetResponse({
+            id: asset.id,
+            category: asset.category,
+            createdAt: asset.createdAt,
+            updatedAt: asset.updatedAt,
+            business: asset.business,
+            ownerships: asset.ownerships,
+          });
+          break;
+
+        case "OTHER":
+          if (!asset.otherAsset) continue;
+          response = toOtherAssetResponse({
+            id: asset.id,
+            category: asset.category,
+            createdAt: asset.createdAt,
+            updatedAt: asset.updatedAt,
+            otherAsset: asset.otherAsset,
+            ownerships: asset.ownerships,
+          });
+          break;
+      }
+
+      if (response) responses.push(response);
+    }
+
+    return res.json(responses);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
 router.get("/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -144,5 +254,10 @@ router.get("/:id", async (req: Request, res: Response) => {
 });
 
 router.post("/vehicle", createVehicleAsset);
+router.post("/realestate", createRealEstateAsset);
+router.post("/bank", createBankAccountAsset);
+router.post("/investment", createInvestmentAsset);
+router.post("/business", createBusinessAsset);
+router.post("/other", createOtherAsset);
 
 export default router;

@@ -1,10 +1,33 @@
-import { Asset, VehicleAsset, AssetOwnership, User, RealEstateAsset, BankAccountAsset, BusinessAsset, InvestmentAsset, OtherAsset, AssetCategory } from "../generated/prisma/client";
+import { Asset, VehicleAsset, AssetOwnership, User, RealEstateAsset, BankAccountAsset, BusinessAsset, InvestmentAsset, OtherAsset, AssetCategory, PrismaClient, Prisma } from "../generated/prisma/client";
 
 export type OwnershipResponse = {
   userId: string;
   name?: string | null;
   percentage: number;
 };
+
+export async function validateOwners(
+  tx: Prisma.TransactionClient,
+  familyId: string,
+  owners: { userId: string; percentage: number }[]
+) {
+  const total = owners.reduce((sum, o) => sum + o.percentage, 0);
+  if (total !== 100) {
+    throw new Error("Ownership must total 100%");
+  }
+
+  const familyUsers = await tx.user.findMany({
+    where: {
+      familyId,
+      id: { in: owners.map(o => o.userId) },
+    },
+    select: { id: true },
+  });
+
+  if (familyUsers.length !== owners.length) {
+    throw new Error("One or more owners not in family");
+  }
+}
 
 export function toOwnershipResponse(
   ownership: AssetOwnership & { user?: User | null }

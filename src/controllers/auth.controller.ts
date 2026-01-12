@@ -16,7 +16,7 @@ export async function register(req: Request, res: Response) {
 export async function login(req: Request, res: Response) {
   try {
     const result = await loginService(req, res);
-    return result; 
+    return res.status(204).json({success: true}); 
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Server error" });
