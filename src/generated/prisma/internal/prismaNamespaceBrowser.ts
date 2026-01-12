@@ -263,9 +263,10 @@ export type OtherAssetScalarFieldEnum = (typeof OtherAssetScalarFieldEnum)[keyof
 export const AssetDocumentScalarFieldEnum = {
   id: 'id',
   assetId: 'assetId',
+  documentType: 'documentType',
   fileName: 'fileName',
-  fileUrl: 'fileUrl',
-  fileType: 'fileType',
+  s3Key: 's3Key',
+  fileSize: 'fileSize',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'

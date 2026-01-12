@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { prisma } from "../config/prisma";
 import { z } from "zod";
 import bcrypt from "bcrypt";
+import { User, UserSession } from "../generated/prisma/client";
 
 const inputSchema = z.object({
   email: z.string().email(),
@@ -91,4 +92,38 @@ export async function registerUser(input: {
 export async function hashPassword(password: string): Promise<string> {
   const salt = await bcrypt.genSalt(10);
   return bcrypt.hash(password, salt);
+}
+
+export async function findLoggedInUser(  req: Request): Promise<User | null> {
+  const session = await findLoggedInSession(req);
+  if (!session) {
+    return null;
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: session.userId },
+  });
+
+  return user;
+}
+
+export async function findLoggedInSession(req: Request): Promise<UserSession | null> {
+    const sessionId = req.cookies["session-id"] as string | undefined;
+
+  if (!sessionId) {
+    return null;
+  }
+
+  const session = await prisma.userSession.findUnique({
+    where: {
+      id: sessionId,
+      active: true,
+      expiresAt: { gt: new Date() },
+    },
+  });
+  if (!session) {
+    return null;
+  }
+
+  return session;
 }

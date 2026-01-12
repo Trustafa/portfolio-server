@@ -1532,9 +1532,10 @@ export type OtherAssetScalarFieldEnum = (typeof OtherAssetScalarFieldEnum)[keyof
 export const AssetDocumentScalarFieldEnum = {
   id: 'id',
   assetId: 'assetId',
+  documentType: 'documentType',
   fileName: 'fileName',
-  fileUrl: 'fileUrl',
-  fileType: 'fileType',
+  s3Key: 's3Key',
+  fileSize: 'fileSize',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -1647,6 +1648,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AssetDocumentType'
+ */
+export type EnumAssetDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssetDocumentType'>
+    
+
+
+/**
+ * Reference to a field of type 'AssetDocumentType[]'
+ */
+export type ListEnumAssetDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssetDocumentType[]'>
     
 
 /**

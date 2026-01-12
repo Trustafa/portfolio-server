@@ -300,6 +300,50 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
 }
 
+export type EnumAssetDocumentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.AssetDocumentType | Prisma.EnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AssetDocumentType[] | Prisma.ListEnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AssetDocumentType[] | Prisma.ListEnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAssetDocumentTypeFilter<$PrismaModel> | $Enums.AssetDocumentType
+}
+
+export type IntFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedIntFilter<$PrismaModel> | number
+}
+
+export type EnumAssetDocumentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AssetDocumentType | Prisma.EnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AssetDocumentType[] | Prisma.ListEnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AssetDocumentType[] | Prisma.ListEnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAssetDocumentTypeWithAggregatesFilter<$PrismaModel> | $Enums.AssetDocumentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAssetDocumentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAssetDocumentTypeFilter<$PrismaModel>
+}
+
+export type IntWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedIntWithAggregatesFilter<$PrismaModel> | number
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatFilter<$PrismaModel>
+  _sum?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedIntFilter<$PrismaModel>
+  _max?: Prisma.NestedIntFilter<$PrismaModel>
+}
+
 export type NestedUuidFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -582,6 +626,39 @@ export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumAssetDocumentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.AssetDocumentType | Prisma.EnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AssetDocumentType[] | Prisma.ListEnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AssetDocumentType[] | Prisma.ListEnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAssetDocumentTypeFilter<$PrismaModel> | $Enums.AssetDocumentType
+}
+
+export type NestedEnumAssetDocumentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AssetDocumentType | Prisma.EnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AssetDocumentType[] | Prisma.ListEnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AssetDocumentType[] | Prisma.ListEnumAssetDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAssetDocumentTypeWithAggregatesFilter<$PrismaModel> | $Enums.AssetDocumentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAssetDocumentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAssetDocumentTypeFilter<$PrismaModel>
+}
+
+export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedIntWithAggregatesFilter<$PrismaModel> | number
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatFilter<$PrismaModel>
+  _sum?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedIntFilter<$PrismaModel>
+  _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
 

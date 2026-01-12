@@ -20,16 +20,27 @@ export type AssetDocumentModel = runtime.Types.Result.DefaultSelection<Prisma.$A
 
 export type AggregateAssetDocument = {
   _count: AssetDocumentCountAggregateOutputType | null
+  _avg: AssetDocumentAvgAggregateOutputType | null
+  _sum: AssetDocumentSumAggregateOutputType | null
   _min: AssetDocumentMinAggregateOutputType | null
   _max: AssetDocumentMaxAggregateOutputType | null
+}
+
+export type AssetDocumentAvgAggregateOutputType = {
+  fileSize: number | null
+}
+
+export type AssetDocumentSumAggregateOutputType = {
+  fileSize: number | null
 }
 
 export type AssetDocumentMinAggregateOutputType = {
   id: string | null
   assetId: string | null
+  documentType: $Enums.AssetDocumentType | null
   fileName: string | null
-  fileUrl: string | null
-  fileType: string | null
+  s3Key: string | null
+  fileSize: number | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -38,9 +49,10 @@ export type AssetDocumentMinAggregateOutputType = {
 export type AssetDocumentMaxAggregateOutputType = {
   id: string | null
   assetId: string | null
+  documentType: $Enums.AssetDocumentType | null
   fileName: string | null
-  fileUrl: string | null
-  fileType: string | null
+  s3Key: string | null
+  fileSize: number | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -49,9 +61,10 @@ export type AssetDocumentMaxAggregateOutputType = {
 export type AssetDocumentCountAggregateOutputType = {
   id: number
   assetId: number
+  documentType: number
   fileName: number
-  fileUrl: number
-  fileType: number
+  s3Key: number
+  fileSize: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -59,12 +72,21 @@ export type AssetDocumentCountAggregateOutputType = {
 }
 
 
+export type AssetDocumentAvgAggregateInputType = {
+  fileSize?: true
+}
+
+export type AssetDocumentSumAggregateInputType = {
+  fileSize?: true
+}
+
 export type AssetDocumentMinAggregateInputType = {
   id?: true
   assetId?: true
+  documentType?: true
   fileName?: true
-  fileUrl?: true
-  fileType?: true
+  s3Key?: true
+  fileSize?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -73,9 +95,10 @@ export type AssetDocumentMinAggregateInputType = {
 export type AssetDocumentMaxAggregateInputType = {
   id?: true
   assetId?: true
+  documentType?: true
   fileName?: true
-  fileUrl?: true
-  fileType?: true
+  s3Key?: true
+  fileSize?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -84,9 +107,10 @@ export type AssetDocumentMaxAggregateInputType = {
 export type AssetDocumentCountAggregateInputType = {
   id?: true
   assetId?: true
+  documentType?: true
   fileName?: true
-  fileUrl?: true
-  fileType?: true
+  s3Key?: true
+  fileSize?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -131,6 +155,18 @@ export type AssetDocumentAggregateArgs<ExtArgs extends runtime.Types.Extensions.
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: AssetDocumentAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: AssetDocumentSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: AssetDocumentMinAggregateInputType
@@ -161,6 +197,8 @@ export type AssetDocumentGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   _count?: AssetDocumentCountAggregateInputType | true
+  _avg?: AssetDocumentAvgAggregateInputType
+  _sum?: AssetDocumentSumAggregateInputType
   _min?: AssetDocumentMinAggregateInputType
   _max?: AssetDocumentMaxAggregateInputType
 }
@@ -168,13 +206,16 @@ export type AssetDocumentGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 export type AssetDocumentGroupByOutputType = {
   id: string
   assetId: string
+  documentType: $Enums.AssetDocumentType
   fileName: string
-  fileUrl: string
-  fileType: string
+  s3Key: string
+  fileSize: number
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
   _count: AssetDocumentCountAggregateOutputType | null
+  _avg: AssetDocumentAvgAggregateOutputType | null
+  _sum: AssetDocumentSumAggregateOutputType | null
   _min: AssetDocumentMinAggregateOutputType | null
   _max: AssetDocumentMaxAggregateOutputType | null
 }
@@ -198,11 +239,12 @@ export type AssetDocumentWhereInput = {
   AND?: Prisma.AssetDocumentWhereInput | Prisma.AssetDocumentWhereInput[]
   OR?: Prisma.AssetDocumentWhereInput[]
   NOT?: Prisma.AssetDocumentWhereInput | Prisma.AssetDocumentWhereInput[]
-  id?: Prisma.StringFilter<"AssetDocument"> | string
+  id?: Prisma.UuidFilter<"AssetDocument"> | string
   assetId?: Prisma.StringFilter<"AssetDocument"> | string
+  documentType?: Prisma.EnumAssetDocumentTypeFilter<"AssetDocument"> | $Enums.AssetDocumentType
   fileName?: Prisma.StringFilter<"AssetDocument"> | string
-  fileUrl?: Prisma.StringFilter<"AssetDocument"> | string
-  fileType?: Prisma.StringFilter<"AssetDocument"> | string
+  s3Key?: Prisma.StringFilter<"AssetDocument"> | string
+  fileSize?: Prisma.IntFilter<"AssetDocument"> | number
   createdAt?: Prisma.DateTimeFilter<"AssetDocument"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssetDocument"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AssetDocument"> | Date | string | null
@@ -212,9 +254,10 @@ export type AssetDocumentWhereInput = {
 export type AssetDocumentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
+  documentType?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
-  fileUrl?: Prisma.SortOrder
-  fileType?: Prisma.SortOrder
+  s3Key?: Prisma.SortOrder
+  fileSize?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -223,42 +266,47 @@ export type AssetDocumentOrderByWithRelationInput = {
 
 export type AssetDocumentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  assetId?: string
   AND?: Prisma.AssetDocumentWhereInput | Prisma.AssetDocumentWhereInput[]
   OR?: Prisma.AssetDocumentWhereInput[]
   NOT?: Prisma.AssetDocumentWhereInput | Prisma.AssetDocumentWhereInput[]
-  assetId?: Prisma.StringFilter<"AssetDocument"> | string
+  documentType?: Prisma.EnumAssetDocumentTypeFilter<"AssetDocument"> | $Enums.AssetDocumentType
   fileName?: Prisma.StringFilter<"AssetDocument"> | string
-  fileUrl?: Prisma.StringFilter<"AssetDocument"> | string
-  fileType?: Prisma.StringFilter<"AssetDocument"> | string
+  s3Key?: Prisma.StringFilter<"AssetDocument"> | string
+  fileSize?: Prisma.IntFilter<"AssetDocument"> | number
   createdAt?: Prisma.DateTimeFilter<"AssetDocument"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssetDocument"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AssetDocument"> | Date | string | null
   asset?: Prisma.XOR<Prisma.AssetScalarRelationFilter, Prisma.AssetWhereInput>
-}, "id">
+}, "id" | "assetId">
 
 export type AssetDocumentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
+  documentType?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
-  fileUrl?: Prisma.SortOrder
-  fileType?: Prisma.SortOrder
+  s3Key?: Prisma.SortOrder
+  fileSize?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AssetDocumentCountOrderByAggregateInput
+  _avg?: Prisma.AssetDocumentAvgOrderByAggregateInput
   _max?: Prisma.AssetDocumentMaxOrderByAggregateInput
   _min?: Prisma.AssetDocumentMinOrderByAggregateInput
+  _sum?: Prisma.AssetDocumentSumOrderByAggregateInput
 }
 
 export type AssetDocumentScalarWhereWithAggregatesInput = {
   AND?: Prisma.AssetDocumentScalarWhereWithAggregatesInput | Prisma.AssetDocumentScalarWhereWithAggregatesInput[]
   OR?: Prisma.AssetDocumentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AssetDocumentScalarWhereWithAggregatesInput | Prisma.AssetDocumentScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"AssetDocument"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"AssetDocument"> | string
   assetId?: Prisma.StringWithAggregatesFilter<"AssetDocument"> | string
+  documentType?: Prisma.EnumAssetDocumentTypeWithAggregatesFilter<"AssetDocument"> | $Enums.AssetDocumentType
   fileName?: Prisma.StringWithAggregatesFilter<"AssetDocument"> | string
-  fileUrl?: Prisma.StringWithAggregatesFilter<"AssetDocument"> | string
-  fileType?: Prisma.StringWithAggregatesFilter<"AssetDocument"> | string
+  s3Key?: Prisma.StringWithAggregatesFilter<"AssetDocument"> | string
+  fileSize?: Prisma.IntWithAggregatesFilter<"AssetDocument"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AssetDocument"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AssetDocument"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AssetDocument"> | Date | string | null
@@ -266,9 +314,10 @@ export type AssetDocumentScalarWhereWithAggregatesInput = {
 
 export type AssetDocumentCreateInput = {
   id?: string
+  documentType: $Enums.AssetDocumentType
   fileName: string
-  fileUrl: string
-  fileType: string
+  s3Key: string
+  fileSize: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -278,9 +327,10 @@ export type AssetDocumentCreateInput = {
 export type AssetDocumentUncheckedCreateInput = {
   id?: string
   assetId: string
+  documentType: $Enums.AssetDocumentType
   fileName: string
-  fileUrl: string
-  fileType: string
+  s3Key: string
+  fileSize: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -288,9 +338,10 @@ export type AssetDocumentUncheckedCreateInput = {
 
 export type AssetDocumentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentType?: Prisma.EnumAssetDocumentTypeFieldUpdateOperationsInput | $Enums.AssetDocumentType
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.StringFieldUpdateOperationsInput | string
+  s3Key?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -300,9 +351,10 @@ export type AssetDocumentUpdateInput = {
 export type AssetDocumentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentType?: Prisma.EnumAssetDocumentTypeFieldUpdateOperationsInput | $Enums.AssetDocumentType
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.StringFieldUpdateOperationsInput | string
+  s3Key?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -311,9 +363,10 @@ export type AssetDocumentUncheckedUpdateInput = {
 export type AssetDocumentCreateManyInput = {
   id?: string
   assetId: string
+  documentType: $Enums.AssetDocumentType
   fileName: string
-  fileUrl: string
-  fileType: string
+  s3Key: string
+  fileSize: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -321,9 +374,10 @@ export type AssetDocumentCreateManyInput = {
 
 export type AssetDocumentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentType?: Prisma.EnumAssetDocumentTypeFieldUpdateOperationsInput | $Enums.AssetDocumentType
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.StringFieldUpdateOperationsInput | string
+  s3Key?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -332,9 +386,10 @@ export type AssetDocumentUpdateManyMutationInput = {
 export type AssetDocumentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   assetId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentType?: Prisma.EnumAssetDocumentTypeFieldUpdateOperationsInput | $Enums.AssetDocumentType
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.StringFieldUpdateOperationsInput | string
+  s3Key?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -353,20 +408,26 @@ export type AssetDocumentOrderByRelationAggregateInput = {
 export type AssetDocumentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
+  documentType?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
-  fileUrl?: Prisma.SortOrder
-  fileType?: Prisma.SortOrder
+  s3Key?: Prisma.SortOrder
+  fileSize?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
 }
 
+export type AssetDocumentAvgOrderByAggregateInput = {
+  fileSize?: Prisma.SortOrder
+}
+
 export type AssetDocumentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
+  documentType?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
-  fileUrl?: Prisma.SortOrder
-  fileType?: Prisma.SortOrder
+  s3Key?: Prisma.SortOrder
+  fileSize?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -375,12 +436,17 @@ export type AssetDocumentMaxOrderByAggregateInput = {
 export type AssetDocumentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   assetId?: Prisma.SortOrder
+  documentType?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
-  fileUrl?: Prisma.SortOrder
-  fileType?: Prisma.SortOrder
+  s3Key?: Prisma.SortOrder
+  fileSize?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+}
+
+export type AssetDocumentSumOrderByAggregateInput = {
+  fileSize?: Prisma.SortOrder
 }
 
 export type AssetDocumentCreateNestedManyWithoutAssetInput = {
@@ -425,11 +491,24 @@ export type AssetDocumentUncheckedUpdateManyWithoutAssetNestedInput = {
   deleteMany?: Prisma.AssetDocumentScalarWhereInput | Prisma.AssetDocumentScalarWhereInput[]
 }
 
+export type EnumAssetDocumentTypeFieldUpdateOperationsInput = {
+  set?: $Enums.AssetDocumentType
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type AssetDocumentCreateWithoutAssetInput = {
   id?: string
+  documentType: $Enums.AssetDocumentType
   fileName: string
-  fileUrl: string
-  fileType: string
+  s3Key: string
+  fileSize: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -437,9 +516,10 @@ export type AssetDocumentCreateWithoutAssetInput = {
 
 export type AssetDocumentUncheckedCreateWithoutAssetInput = {
   id?: string
+  documentType: $Enums.AssetDocumentType
   fileName: string
-  fileUrl: string
-  fileType: string
+  s3Key: string
+  fileSize: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -475,11 +555,12 @@ export type AssetDocumentScalarWhereInput = {
   AND?: Prisma.AssetDocumentScalarWhereInput | Prisma.AssetDocumentScalarWhereInput[]
   OR?: Prisma.AssetDocumentScalarWhereInput[]
   NOT?: Prisma.AssetDocumentScalarWhereInput | Prisma.AssetDocumentScalarWhereInput[]
-  id?: Prisma.StringFilter<"AssetDocument"> | string
+  id?: Prisma.UuidFilter<"AssetDocument"> | string
   assetId?: Prisma.StringFilter<"AssetDocument"> | string
+  documentType?: Prisma.EnumAssetDocumentTypeFilter<"AssetDocument"> | $Enums.AssetDocumentType
   fileName?: Prisma.StringFilter<"AssetDocument"> | string
-  fileUrl?: Prisma.StringFilter<"AssetDocument"> | string
-  fileType?: Prisma.StringFilter<"AssetDocument"> | string
+  s3Key?: Prisma.StringFilter<"AssetDocument"> | string
+  fileSize?: Prisma.IntFilter<"AssetDocument"> | number
   createdAt?: Prisma.DateTimeFilter<"AssetDocument"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssetDocument"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AssetDocument"> | Date | string | null
@@ -487,9 +568,10 @@ export type AssetDocumentScalarWhereInput = {
 
 export type AssetDocumentCreateManyAssetInput = {
   id?: string
+  documentType: $Enums.AssetDocumentType
   fileName: string
-  fileUrl: string
-  fileType: string
+  s3Key: string
+  fileSize: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -497,9 +579,10 @@ export type AssetDocumentCreateManyAssetInput = {
 
 export type AssetDocumentUpdateWithoutAssetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentType?: Prisma.EnumAssetDocumentTypeFieldUpdateOperationsInput | $Enums.AssetDocumentType
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.StringFieldUpdateOperationsInput | string
+  s3Key?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -507,9 +590,10 @@ export type AssetDocumentUpdateWithoutAssetInput = {
 
 export type AssetDocumentUncheckedUpdateWithoutAssetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentType?: Prisma.EnumAssetDocumentTypeFieldUpdateOperationsInput | $Enums.AssetDocumentType
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.StringFieldUpdateOperationsInput | string
+  s3Key?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -517,9 +601,10 @@ export type AssetDocumentUncheckedUpdateWithoutAssetInput = {
 
 export type AssetDocumentUncheckedUpdateManyWithoutAssetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentType?: Prisma.EnumAssetDocumentTypeFieldUpdateOperationsInput | $Enums.AssetDocumentType
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.StringFieldUpdateOperationsInput | string
+  s3Key?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -530,9 +615,10 @@ export type AssetDocumentUncheckedUpdateManyWithoutAssetInput = {
 export type AssetDocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   assetId?: boolean
+  documentType?: boolean
   fileName?: boolean
-  fileUrl?: boolean
-  fileType?: boolean
+  s3Key?: boolean
+  fileSize?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -542,9 +628,10 @@ export type AssetDocumentSelect<ExtArgs extends runtime.Types.Extensions.Interna
 export type AssetDocumentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   assetId?: boolean
+  documentType?: boolean
   fileName?: boolean
-  fileUrl?: boolean
-  fileType?: boolean
+  s3Key?: boolean
+  fileSize?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -554,9 +641,10 @@ export type AssetDocumentSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 export type AssetDocumentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   assetId?: boolean
+  documentType?: boolean
   fileName?: boolean
-  fileUrl?: boolean
-  fileType?: boolean
+  s3Key?: boolean
+  fileSize?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -566,15 +654,16 @@ export type AssetDocumentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type AssetDocumentSelectScalar = {
   id?: boolean
   assetId?: boolean
+  documentType?: boolean
   fileName?: boolean
-  fileUrl?: boolean
-  fileType?: boolean
+  s3Key?: boolean
+  fileSize?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type AssetDocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assetId" | "fileName" | "fileUrl" | "fileType" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["assetDocument"]>
+export type AssetDocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assetId" | "documentType" | "fileName" | "s3Key" | "fileSize" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["assetDocument"]>
 export type AssetDocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   asset?: boolean | Prisma.AssetDefaultArgs<ExtArgs>
 }
@@ -593,9 +682,10 @@ export type $AssetDocumentPayload<ExtArgs extends runtime.Types.Extensions.Inter
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     assetId: string
+    documentType: $Enums.AssetDocumentType
     fileName: string
-    fileUrl: string
-    fileType: string
+    s3Key: string
+    fileSize: number
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1025,9 +1115,10 @@ export interface Prisma__AssetDocumentClient<T, Null = never, ExtArgs extends ru
 export interface AssetDocumentFieldRefs {
   readonly id: Prisma.FieldRef<"AssetDocument", 'String'>
   readonly assetId: Prisma.FieldRef<"AssetDocument", 'String'>
+  readonly documentType: Prisma.FieldRef<"AssetDocument", 'AssetDocumentType'>
   readonly fileName: Prisma.FieldRef<"AssetDocument", 'String'>
-  readonly fileUrl: Prisma.FieldRef<"AssetDocument", 'String'>
-  readonly fileType: Prisma.FieldRef<"AssetDocument", 'String'>
+  readonly s3Key: Prisma.FieldRef<"AssetDocument", 'String'>
+  readonly fileSize: Prisma.FieldRef<"AssetDocument", 'Int'>
   readonly createdAt: Prisma.FieldRef<"AssetDocument", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AssetDocument", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"AssetDocument", 'DateTime'>
