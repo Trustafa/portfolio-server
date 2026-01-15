@@ -2,7 +2,7 @@ import { Asset, VehicleAsset, AssetOwnership, User, RealEstateAsset, BankAccount
 
 export type OwnershipResponse = {
   userId: string;
-  name?: string | null;
+  name: string;
   percentage: number;
 };
 
@@ -35,7 +35,7 @@ export function toOwnershipResponse(
   if (!ownership.user) {
     return {
       userId: ownership.userId ?? "", // fallback if somehow null
-      name: null,
+      name: "",
       percentage: ownership.percentage,
     };
   }
@@ -49,27 +49,22 @@ export function toOwnershipResponse(
 
 export type VehicleAssetResponse = {
   id: string;
+  assetId: string;
   category: string;
 
-  vehicle: {
-    vehicleName: string;
-    vehicleType: string;
-    make?: string | null;
-    model?: string | null;
-    year?: number | null;
-    registrationNumber?: string | null;
-    purchasePrice: number;
-    purchaseDate?: string | null;
-    currentValue: number;
-    outstandingLoan?: number | null;
-  };
+  vehicleName: string;
+  vehicleType: string;
+  make?: string | null;
+  model?: string | null;
+  year?: number | null;
+  registrationNumber?: string | null;
+  purchasePrice: number;
+  purchaseDate?: string | null;
+  currentValue: number;
+  outstandingLoan?: number | null;
 
-  owners: {
-    userId: string;
-    name?: string | null;
-    percentage: number;
-  }[];
-
+  ownerships: OwnershipResponse[];
+  
   createdAt: string;
   updatedAt: string;
 };
@@ -85,25 +80,22 @@ export function toVehicleResponse(
 }
 ): VehicleAssetResponse {
   return {
-    id: asset.id,
+    id: asset.vehicle.id,
+    assetId: asset.id,
     category: asset.category,
-    vehicle: {
-      vehicleName: asset.vehicle.vehicleName,
-      vehicleType: asset.vehicle.vehicleType,
-      make: asset.vehicle.make,
-      model: asset.vehicle.model,
-      year: asset.vehicle.year,
-      registrationNumber: asset.vehicle.registrationNumber,
-      purchasePrice: asset.vehicle.purchasePrice,
-      purchaseDate: asset.vehicle.purchaseDate?.toISOString() ?? null,
-      currentValue: asset.vehicle.currentValue,
-      outstandingLoan: asset.vehicle.outstandingLoan,
-    },
-    owners: asset.ownerships.filter(o => o.userId).map(o => ({
-      userId: o.userId!,
-      name: o.user?.name ?? null,
-      percentage: o.percentage,
-    })),
+    
+    vehicleName: asset.vehicle.vehicleName,
+    vehicleType: asset.vehicle.vehicleType,
+    make: asset.vehicle.make,
+    model: asset.vehicle.model,
+    year: asset.vehicle.year,
+    registrationNumber: asset.vehicle.registrationNumber,
+    purchasePrice: asset.vehicle.purchasePrice,
+    purchaseDate: asset.vehicle.purchaseDate?.toISOString() ?? null,
+    currentValue: asset.vehicle.currentValue,
+    outstandingLoan: asset.vehicle.outstandingLoan,
+    
+    ownerships: asset.ownerships.map(toOwnershipResponse),
     createdAt: asset.createdAt.toISOString(),
     updatedAt: asset.updatedAt.toISOString(),
   };
@@ -112,7 +104,9 @@ export function toVehicleResponse(
 // ------------------- Real Estate -------------------
 export type RealEstateAssetResponse = {
   id: string;
+  category: string;
   assetId: string;
+
   propertyName: string;
   propertyType: string;
   location: string;
@@ -143,6 +137,7 @@ asset: {
   if (!asset.realEstate) throw new Error("No real estate asset data found");
   return {
     id: asset.realEstate.id,
+    category: asset.category,
     assetId: asset.id,
     propertyName: asset.realEstate.propertyName,
     propertyType: asset.realEstate.propertyType,
@@ -164,7 +159,9 @@ asset: {
 // ------------------- Bank Account -------------------
 export type BankAccountAssetResponse = {
   id: string;
+  category: string;
   assetId: string;
+
   accountName: string;
   bankName: string;
   accountNumber?: string | null;
@@ -192,6 +189,7 @@ asset: {
   if (!asset.bankAccount) throw new Error("No bank account asset data found");
   return {
     id: asset.bankAccount.id,
+    category: asset.category,
     assetId: asset.id,
     accountName: asset.bankAccount.accountName,
     bankName: asset.bankAccount.bankName,
@@ -210,7 +208,9 @@ asset: {
 // ------------------- Investment -------------------
 export type InvestmentAssetResponse = {
   id: string;
+  category: string;
   assetId: string;
+
   investmentName: string;
   broker: string;
   accountNumber?: string | null;
@@ -239,6 +239,7 @@ asset: {
   if (!asset.investment) throw new Error("No investment asset data found");
   return {
     id: asset.investment.id,
+    category: asset.category,
     assetId: asset.id,
     investmentName: asset.investment.investmentName,
     broker: asset.investment.broker,
@@ -258,7 +259,9 @@ asset: {
 // ------------------- Business -------------------
 export type BusinessAssetResponse = {
   id: string;
+  category: string;
   assetId: string;
+
   businessName: string;
   licenseNumber?: string | null;
   industry: string;
@@ -287,6 +290,7 @@ asset: {
   if (!asset.business) throw new Error("No business asset data found");
   return {
     id: asset.business.id,
+    category: asset.category,
     assetId: asset.id,
     businessName: asset.business.businessName,
     licenseNumber: asset.business.licenseNumber,
@@ -306,7 +310,9 @@ asset: {
 // ------------------- Other -------------------
 export type OtherAssetResponse = {
   id: string;
+  category: string;
   assetId: string;
+
   assetName: string;
   assetCategory: string;
   description?: string | null;
@@ -334,6 +340,7 @@ asset: {
   if (!asset.otherAsset) throw new Error("No other asset data found");
   return {
     id: asset.otherAsset.id,
+    category: asset.category,
     assetId: asset.id,
     assetName: asset.otherAsset.assetName,
     assetCategory: asset.otherAsset.assetCategory,

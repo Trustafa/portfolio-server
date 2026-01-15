@@ -54,10 +54,10 @@ export async function createVehicleAsset(req: Request, res: Response) {
         },
       });
 
-      await validateOwners(tx, loggedInUser.familyId, data.owners);
+      await validateOwners(tx, loggedInUser.familyId, owners);
 
       await tx.assetOwnership.createMany({
-        data: data.owners.map(o => ({
+        data: owners.map(o => ({
           assetId: asset.id,
           userId: o.userId,
           percentage: o.percentage,
